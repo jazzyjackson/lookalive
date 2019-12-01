@@ -1,8 +1,14 @@
 # lookalive
 
-Lookalive Software is a new way to compose data and code into programs that take arguments, make network and filesystem requests, and return structured data as JSON, XML, or HTML.
-
+'lookalive' is a new method for composing programs that return structured data as JSON, XML, or HTML.
 It can be used to define API endpoints, perform mail merges, and create document templates for reports and web pages. 
+
+Because lookalive programs are valid JSON files, you can write the structure that you want and weave in the results of function calls embedded in this structure. This can make it easy to know what a program does by glancing over the code, without interpreting traditional source code line by line trying to keep track of what will end up happening.
+
+The shear amount of bracket and curly-brace syntax may look overwhelming (it is LISP-y in that way), but a development environment that renders all of that structure into an easy-to-manipulate visual program tree is in the works.
+
+colten.jackson@lookalive.software
+
 ```
 cat helloworld.json
 {"#!join": [["Hello, ", "#& name", "!"]]}
