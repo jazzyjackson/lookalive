@@ -1,0 +1,78 @@
+{"#!join": [[
+    "A triangle with side of ",
+    "#& side",
+    " and base of ",
+    "#& base",
+    "has a hypotenuse of",
+    {"#!sqrt": [[
+        {"#!sum": [[
+            "#!product side side",
+            "#!product base base"
+        ]]}
+    ]]}
+]]}
+
+hypo.json side=3 base=4
+{"#!join": [[
+    "A triangle with side of ",
+    "#& side",
+    " and base of ",
+    "#& base",
+    "has a hypotenuse of",
+    {"#!sqrt": [[
+        {"#!sum": [[
+            "#!product side side",
+            "#!product base base"
+        ]]}
+    ]]}
+]]}
+
+{"#!join": [[
+    "A triangle with side of ",
+    3,
+    " and base of ",
+    4,
+    "has a hypotenuse of",
+    {"#!sqrt": [[
+        {"#!sum": [[
+            "#!product 3 3",
+            "#!product 4 4"
+        ]]}
+    ]]}
+]]}
+
+{"#!join": [[
+    "A triangle with side of ",
+    3,
+    " and base of ",
+    4,
+    "has a hypotenuse of",
+    {"#!sqrt": [[
+        {"#!sum": [[
+            9,
+            16
+        ]]}
+    ]]}
+]]}
+
+{"#!join": [[
+    "A triangle with side of ",
+    3,
+    " and base of ",
+    4,
+    "has a hypotenuse of",
+    {"#!sqrt": [[
+        25
+    ]]}
+]]}
+
+{"#!join": [[
+    "A triangle with side of ",
+    3,
+    " and base of ",
+    4,
+    "has a hypotenuse of",
+    5
+]]}
+
+"A triangle with side of 3 and base of 4 has a hypotenuse of 5"
