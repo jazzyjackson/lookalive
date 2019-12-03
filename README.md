@@ -7,7 +7,6 @@ Because lookalive programs are valid JSON files, you can write the structure tha
 
 The shear amount of bracket and curly-brace syntax may look overwhelming (it is LISP-y in that way), but a development environment that renders all of that structure into an easy-to-manipulate visual program tree is in the works.
 
-colten.jackson@lookalive.software
 
 ```
 cat helloworld.json
