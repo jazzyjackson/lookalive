@@ -1,7 +1,8 @@
 <body style="background: #353453; display: flex;flex-direction: column;">
   <style>
     img {
-      width: 100%;
+      width: 50%;
+      float: left;
       margin-bottom: 10px;
     }
     img#logo {
@@ -28,21 +29,24 @@
       <p> It works by interpreting a JSON file as a dependency graph: any key or value that starts with <span>#!</span>, <span>#&</span>, <span>#?</span>, or <span>#=</span> represent some action that must take place before the program is complete. As a first example, Hello World is the result of a <span>#!join</span> of 3 elements, but before performing this join, <span>#& name</span> is replaced with <span>everyone</span> and now the join function can be completed.
       </p>
     </div>
-    <img src="img/hello.gif"">
+    <img src="img/helloname.png">
+    <img src="img/hello_gui.gif">
     <div>
       <p>Math is performed in polish notation, with the name of an operator followed by its arguments, in this case <span>0</span> refers to the '0th' argument passed by command line and once the variable names are resolved the program is equivelant to <span>(* 12 12)</span>.
       </p>
       <p>The string <span>"#!product 12 12"</span> replaces itself with the number 144, which on its own is still a valid JSON document.
       </p>
     </div>
-    <img src="img/square.gif">
+    <img src="img/multiply.png">
+    <img src="img/multiply_gui.png">
     <div>
       <p>LOOKALIVE becomes more useful in less trivial examples, where stepping through the execution of a program shows what operations can be done in parallel and what functions are waiting for others to complete. Parallel and Asynchronous programming which is usually very tricky to think about becames a matter of declaring a depedency tree, "this function call relies on this variable", and everything happens as soon as its dependencies are resolved.
       </p>
       <p> Here, the references to the <span>side</span> and <span>base</span> variables are resolved simultaneously, and the sentence "A triangle with side of 3 and base of 4 has a hypotenuse of 5" is joined once the math is completed.
       </p>
     </div>
-    <img src="img/hypo.gif">
+    <img src="img/hypo.png">
+    <img src="img/hypo_gui.gif">
     <div>
       <p> LOOKALIVE is in development. A first release will use functions written in NodeJS, but WebAssembly will allow the JSON file to refer to functions written in a variety of langauges, such as C, Rust, Go, and Java. LOOKALIVE doesn't need to know what happens inside the function calls, it merely keeps track of what variables to pass to the function and what the function returns. In this way, it can be used to build sophisticated tools out of simple machines.
      </p>
