@@ -1,0 +1,181 @@
+A program is read from file
+The program is "expanded", wrapping each value in a meta-object
+
+lookalive program.json name=Colten
+
+["hello ", "#& name"] =>
+
+{
+    data: [
+        {data: "hello "},
+        {data: "#& name"},
+    ]
+}
+
+{
+    done: null
+    env: {
+        name: Colten
+    },
+    data: [{
+        data: "hello ",
+        done: null,
+        env: {}
+    },{
+        exec: {
+            magic: '#&',
+            argv: ['name'],
+        }
+        done: null, // or undefined... false means started, true means done
+    }]
+}
+
+then gets traversed into reverse order, iterate over [keypath, data || exec], if(done) continue
+[ ], {data, done, env}
+[0], {data, done, env}
+[1], {exec, done, env}
+
+For each of this ephemeral order, if every child is complete, 
+evalOrder = traverse(target).reverse()
+
+resolve(value).then(({result, path}) => {
+    if(data){
+        
+        // neat you can assign values to arrays !
+        Object.assign(target.get(path), {
+            data, // aka next
+            env: {result},
+            done: null // previous data is resolved next one is not yet seen...
+        }
+    }
+})
+
+So target gets overwritten....
+target is then re-scanned along 'path' from previous search
+any new items whose children are done....
+
+items in the scanArray are references to the same items in the 'data' of items higher in the tree
+
+So it would be good to synchronously mark children as done,
+so their parents can be marked done with as few scans as possible
+
+only start a new scan as the result of an asynchronous resolution
+(#! is the only async function, continue scanning the tree before spending anytime on compute...)
+
+---------
+
+
+A target:proxy is created
+    at 'null' path, a json decoded object is written to the proxy
+    writing to the proxy triggers 2 processes:
+        a full scan (logging state with timestamps) at the modified pathname (null a.k.a. 'the top' to begin)
+        a constrained traversal (skipping resolved and scheduled paths) checking if children or prereqs are resolved
+        at any point that the next nodes are resolved, the current node is added to the schedule
+
+A schedule:proxy is created
+    [path, {agent, argv, kwarg, scope, next}] tuples are set on the schedule after being decoded and checked against 'resolved' Set
+    if there is no magic, all that happens is the path is added to resolved:set so it won't be decoded again and parent nodes can be scheduled
+    if there is magic, an async process is kicked off, and when its finished:
+
+
+A scope:object is created
+
+
+implementation goals are to have an easy-to-reason-about traversal with no tricks
+maybe it is wasteful, but it is more important to be clear
+resolved paths are skipped, so that each iteration takes a little less time
+the other benefit is the runtime visualization, as the walk/queue behaves predicatably
+it is easy to watch the process, it doesn't look mysterious:
+    scanning occurs from the top, and whenever something is replaced scan is performed at that path
+    scheduling occurs from the top, and anything that is ready to be resolved is resolved
+    good optimization:
+        and then when any job is complete, well, 
+        the scheduling could follow a path from a recently completed magic,
+        so scheduler, given no path to begin with, crawls the whole object
+        given a path of a change, starts from the top and just follows those branches...
+
+There exists a Set of pathnames of program branches that require no further inspection
+There exists a Map of pathnames -> data which is ready to be computed / reduced
+    This Map is self-observant
+        Duplicate pathnames are thrown as implementation errors (never expected)
+        Each path/data tuple added to the map is set as an async function
+            exec: data includes prereq + next: if no next, replace path with result (triggering gron update)
+                                               otherwise, update scopetree with result and re-attach 'next' at 'path'
+            on execution, 'scope' is determined from scopetree
+            exec(agent, argv, kwags, scope, next)
+There exists a Graph called scopetree: a {scope, next} data structure
+    given a pathname, return an object that references the most up to date scope for agents at that path
+
+There exists a function that takes a path and data at that path and traverses the remaining branches, returning an array of object updates to be appended to log
+
+There exists a function that determines if a datum at a particular path has any prerequisite data before being determined 'dead'
+    this function decodes a datum, checks for #!=?&, and determines if that path is dead or ready-to-schedule
+
+
+scan
+    an agnostic lookahead: iterate over all children an return array of [path, data]
+    performed on 'set' of the proxy, upon any resolution of magic words
+
+decode
+    keeps walking, skipping paths from schedule.has() and resolved.has()
+    for each value, decode next: isMagic ? prereqs : children
+        the lookahead: if every one of these next items is resolved,
+        schedule current path
+        otherwise: filter next and queue anything not yet schedule/resolved
+        continue, the while loop will consume everything that is ready
+            once decoding the graph is complete 
+            return control to the event loop
+            once anything is returned, the process repeats (later: only along modified paths)
+
+    
+
+    walks a graph with understanding of magic structure "#!" {"#!":[[]]}
+    if prereqs fulfilled or no prereqs (including static strings), push path/data to schedule
+    otherwise, iterate to those children or prereqs
+    
+    called recursively (or on queue?)
+    each item on the queue, 
+    doesn't descend to children, nothing will be done with them until the magic resolves
+    when there is no magic,
+    add children to queue...
+
+exec
+    an object with a setter method, once path/data is set, perform the task
+    if there are children, scope.writeScopeFrom(path, result)
+    overwrite path with children (triggers a scan and eventlog)
+
+
+    if there is no magic, don't overwrite the value, just add the path to static:set
+    given a [path, data] tuple, retrieve the scope.getScopeFrom(path),
+        exec(agent, argv, kwarg, scope)
+    
+    when a decode returns 0 paths and magic is empty, the program is over
+
+
+
+
+SORT
+    Yeah Yeah Yeah "its a very dangerous thing to do exactly what you want"
+    Chairlift "getting what you want can be dangerous"
+    bag-of-concept-distance?
+
+Future Optimizations:
+    - Instead of putting together the output sequence that has to be regex-parsed to access a key at given path,
+    store the path as null separated string, can be used in constant time 'does set contain this sequence' etc, figure out output sequence only when writing to sequence
+
+    - Instead of searching the entire tree whenever a job is finished, take the path of the completed job and just search along that path for more ready-to-run agents (after replacement)
+    
+
+-----
+   
+   // so then you're done scanning from the root node
+   // next time you're given a pointer into the object,
+   // same thing, you start with one thing in the queue,
+   // and you iterate through all the children
+   // so this keeps the whole history of the object in memory
+   // imagine, pausing execution, hitting ctrl z a few times,
+   // and then continuing after making some edits to the program
+   // will be challenging to decide what jobs to drop while the program is paused...
+
+----
+
