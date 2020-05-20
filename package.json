@@ -1,0 +1,27 @@
+{
+  "name": "@lookalive/software",
+  "version": "0.1.0",
+  "description": "Experimental Design for Minimalist Software Development: declarative, self-rewriting trees (DAGs) written in JSON syntax",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-docs": "node node_modules/@lookalive/elementary/elementarycli ./docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jazzyjackson/lookalive.git"
+  },
+  "author": "Colten Jackson",
+  "license": "NCSA",
+  "bugs": {
+    "url": "https://github.com/jazzyjackson/lookalive/issues"
+  },
+  "homepage": "https://github.com/jazzyjackson/lookalive#readme",
+  "devDependencies": {
+    "@lookalive/elementary": "^0.2.2"
+  }
+}
