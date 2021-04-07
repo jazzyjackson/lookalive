@@ -22,6 +22,6 @@
   },
   "homepage": "https://github.com/jazzyjackson/lookalive#readme",
   "devDependencies": {
-    "@lookalive/elementary": "^0.2.2"
+    "@lookalive/elementary": "^0.3.4"
   }
 }

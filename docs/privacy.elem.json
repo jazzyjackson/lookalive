@@ -1,0 +1,56 @@
+[
+    {"html":[
+        {"head":[
+            {"meta": {"charset":"utf8"}},
+            {"style": {
+                "body":{
+                    "background":"#353454",
+                    "display":"flex",
+                    "flex-direction":"column"
+                },
+                "img":{
+                    "width":"50%",
+                    "float":"left",
+                    "margin-bottom":"10px"
+                },
+                "img#logo":{
+                    "opacity":"0.9",
+                    "margin":"0 auto",
+                    "width": "50vw",
+                    "max-height": "250px"
+                },
+                "article":{
+                    "max-width":"640px",
+                    "margin":"30px auto",
+                    "color":"white",
+                    "font-family": "\"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif",
+                    "font-size":"18px",
+                    "text-align":"justify"
+                },
+                "article p span": {
+                    "font-family": "monospace",
+                    "background": "white",
+                    "color": "#353454",
+                    "opacity":"0.9",
+                    "padding":"2px"
+                }
+            }}
+        ]},
+        {"body":[
+            {"img":{
+                "id":"logo",
+                "src":"logo/ready_ani_white.svg"
+            }},
+            {"article":[
+                {"div": [
+                    {"h3": ["Demonitize: Chrome Extension for BitClout.com"]},
+                    {"h1": ["Privacy Policy"]},
+                    {"p": ["Demonitize does not collect any personal data, user activity, or statistics and makes no network requests to any party. Demonitize uses the Chrome WebExtensions Storage Sync API for storing user preferences and communicating preferences between the extension's popup menu and the extension's injected javascript."]},
+                    {"h1": ["Security Disclaimer"]},
+                    {"p": ["While Demonitize never captures data from BitClout.com, and does not make any network requests, it is a security riskk to allow any extension access to your web browsing. When logging into BitClout.com with your mnemonic seed phrase, you should disable any untrusted extension. Once you've logged in, the seed phrase cannot be recovered by injected javascript."]},
+                    {"p": ["Demonitize is authored by Colten Jackson and is not in any way affiliated with BitClout.com"]}
+                ]}
+            ]}
+        ]}
+    ]}
+]
