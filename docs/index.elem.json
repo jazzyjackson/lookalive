@@ -45,11 +45,11 @@
                 {"div": [
                     {"p":["LOOKALIVE is a minimalist approach to software development where programs transform themselves into their resulting data structures."]},
                     {"p":["Standard JSON syntax is used to arrange text, numbers, lists and dictionaries. Substitutions are made wherever one of the following symbols occur:"]},
-                    {"p":[{"span":["#!"]}, "'Solve' is replaced with the result of a function call"]},
-                    {"p":[{"span":["#&"]}, "'Substitute' is replaced with the value of a local variable"]},
-                    {"p":[{"span":["#?"]}, "'Maybe' is replaced with the first non-null value of a list "]},
-                    {"p":[{"span":["#="]}, "'Define' gives names to values for referencing later in the program"]},
-                    {"p":["LOOKALIVE can call out to any other programs so long as input and output are handled as valid JSON. In the following example, the <span>join</span> program takes a list of strings and returns its greeting as a single string."]}
+                    {"p":[{"span":["#="]}, "'Label' attaches a name to any data structure for referencing later in the program"]},
+                    {"p":[{"span":["#&"]}, "'Lookup' replaces itself with the data previously given a label"]},
+                    {"p":[{"span":["#!"]}, "'Solve' becomes the result of a function call"]},
+                    {"p":[{"span":["#?"]}, "'Switch' performs pattern matching and conditional branching"]},
+                    {"p":["LOOKALIVE can call out to any other programs so long as input and output are handled as valid JSON. When run serverside, any executable in the current PATH can be called by name. When run in a web context, it expects the function to be defined in the window. In the following example, the ", {"span": ["join"]}, " program takes a list of strings and returns its greeting as a single string."]}
                 ]},
                 {"img":{"src":"img/helloname.png"}},
                 {"img":{"src":"img/hello_gui.gif"}},

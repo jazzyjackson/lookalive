@@ -46,11 +46,11 @@
         <div>
             <p>LOOKALIVE is a minimalist approach to software development where programs transform themselves into their resulting data structures.</p>
             <p>Standard JSON syntax is used to arrange text, numbers, lists and dictionaries. Substitutions are made wherever one of the following symbols occur:</p>
-            <p><span>#!</span>&apos;Solve&apos; is replaced with the result of a function call</p>
-            <p><span>#&amp;</span>&apos;Substitute&apos; is replaced with the value of a local variable</p>
-            <p><span>#?</span>&apos;Maybe&apos; is replaced with the first non-null value of a list </p>
-            <p><span>#=</span>&apos;Define&apos; gives names to values for referencing later in the program</p>
-            <p>LOOKALIVE can call out to any other programs so long as input and output are handled as valid JSON. In the following example, the &lt;span&gt;join&lt;/span&gt; program takes a list of strings and returns its greeting as a single string.</p>
+            <p><span>#=</span>&apos;Label&apos; attaches a name to any data structure for referencing later in the program</p>
+            <p><span>#&amp;</span>&apos;Lookup&apos; replaces itself with the data previously given a label</p>
+            <p><span>#!</span>&apos;Solve&apos; becomes the result of a function call</p>
+            <p><span>#?</span>&apos;Switch&apos; performs pattern matching and conditional branching</p>
+            <p>LOOKALIVE can call out to any other programs so long as input and output are handled as valid JSON. When run serverside, any executable in the current PATH can be called by name. When run in a web context, it expects the function to be defined in the window. In the following example, the <span>join</span> program takes a list of strings and returns its greeting as a single string.</p>
         </div><img src="img/helloname.png"><img src="img/hello_gui.gif">
         <div>
             <p>On the left is the original program in JSON format, and on the right is a visual step-by-step expansion of the program execution. Being able to step through each transformation of the complete data structure is LOOKALIVE&apos;s essential feature for beginners just learning to code as well as experts trying to understand complex transformations.</p>
